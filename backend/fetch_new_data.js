@@ -5,11 +5,12 @@ require("dotenv").config();
 
 const key = process.env.YOUTUBE_KEY;
 const key1 = process.env.YOUTUBE_KEY_1;
-const turn =1;
-const value = key;
+let turn =1;
+let value = key;
 const youtube = google.youtube({ version: "v3"});
 
 const fetch_from_youtube = async () => {
+  console.log(value, turn)
   try {
     let data = await youtube.search.list({
       key:value,
@@ -32,7 +33,7 @@ const fetch_from_youtube = async () => {
     console.log(data);
     await YoutubeModel.insertMany(data);
   } catch (error) {
-    if (error.code == "429") {
+    if (error.code == "403") {
       // handle key switch
       if(turn==1){
         value=key1;
@@ -42,7 +43,7 @@ const fetch_from_youtube = async () => {
         turn = 1;
       }
     }
-    console.error({ error_api: error.message });
+    console.error({ error_api: error.code });
   }
 };
 

@@ -4,8 +4,8 @@ const data = express.Router();
 
 data.get("/", async (req, res) => {
   try {
-    const page = +req.query.page || 1;
-    const limit = +req.query.limit || 10;
+    const page = +req.query?.page || 1;
+    const limit = +req.query?.limit || 10;
     const data = await YoutubeModel.find()
       .sort({ publishedAt: -1 })
       .skip((page - 1) * limit).limit(limit)
@@ -17,11 +17,12 @@ data.get("/", async (req, res) => {
 
 data.get("/search", async (req, res) => {
   try {
-    const search = req.query.search;
+    const search = req.query?.search;
+    const regexPattern = new RegExp(search, "i");
     const data = await YoutubeModel.find({
       $or: [
-        { title: { $regex: search, $option: "i" } },
-        { description: { $regex: search, $option: "i" } },
+        { title: { $regex: regexPattern } },
+        { description: { $regex: regexPattern } },
       ],
     });
     res.status(200).send(data);
