@@ -12,19 +12,18 @@ app.use(express.json());
 
 app.use("/", data);
 
-setInterval(() => {
-    fetch_from_youtube()
-}, 1000*60*2);
-
-app.use((err, req, res,next)=>{
-    res.status(500).send("Internal Server Error");
-})
+app.use((err, req, res, next) => {
+  res.status(500).send("Internal Server Error");
+});
 
 app.listen(4500, async (req, res) => {
-    try {
-        await connection;
-        console.log(`server is running at port ${process.env.PORT}`);
-    } catch (error) {
-        console.log(`server is not running : ${error.message}`);
-    }
+  try {
+    await connection;
+    setInterval(() => {
+      fetch_from_youtube();
+    }, 1000 * 60 * 1);
+    console.log(`server is running at port ${process.env.PORT}`);
+  } catch (error) {
+    console.log(`server is not running : ${error.message}`);
+  }
 });

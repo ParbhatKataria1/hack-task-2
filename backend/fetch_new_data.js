@@ -4,12 +4,15 @@ const { YoutubeModel } = require("./model/Youtube.model");
 require("dotenv").config();
 
 const key = process.env.YOUTUBE_KEY;
-
-const youtube = google.youtube({ version: "v3", auth: key });
+const key1 = process.env.YOUTUBE_KEY_1;
+const turn =1;
+const value = key;
+const youtube = google.youtube({ version: "v3"});
 
 const fetch_from_youtube = async () => {
   try {
     let data = await youtube.search.list({
+      key:value,
       part: ["snippet"],
       q: "dogs",
       type: "video",
@@ -31,6 +34,13 @@ const fetch_from_youtube = async () => {
   } catch (error) {
     if (error.code == "429") {
       // handle key switch
+      if(turn==1){
+        value=key1;
+        turn = 2;
+      }else {
+        value = key;
+        turn = 1;
+      }
     }
     console.error({ error_api: error.message });
   }
