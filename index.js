@@ -1,39 +1,30 @@
 const express = require("express");
-const { google } = require("googleapis");
 const app = express();
+
 const cors = require("cors");
+const connection = require("./db");
+
+const fetch_from_youtube = require("./fetch_new_data");
+const data = require("./routes/data.routes");
+
 app.use(cors());
 app.use(express.json());
 
-require("dotenv").config();
-const key = process.env.YOUTUBE_KEY;
+app.use("/", data);
 
-const youtube = google.youtube({ version: "v3", auth: key });
-app.get("/", async (req, res) => {
-  try {
-    let data = await youtube.search.list({
-      part: ["snippet"],
-      q: "dogs",
-      type: 'video',
-      order: 'date',
-      publishedAfter: "2023-01-01T00:00:00Z",
-    });
-    data = data.data.items.map((el)=>{
-        const details = el.snippet;
-        return {
-            title:details?.title,
-            description:details?.description,
-            thumbnails:details?.thumbnails?.default?.url || details?.thumbnails?.medium?.url,
-            publishedAt:details?.publishedAt
-        }
-    })
-    await YoutubeModel.insertMany(data);
-    res.send(data)
-  } catch (error) {
-    res.status(400).send({error_api:error.message})
-  }
-});
+setInterval(() => {
+    fetch_from_youtube()
+}, 1000*60*2);
+
+app.use((err, req, res,next)=>{
+    res.status(500).send("Internal Server Error");
+})
 
 app.listen(4500, async (req, res) => {
-  console.log(`server is running at port ${process.env.PORT}`);
+    try {
+        await connection;
+        console.log(`server is running at port ${process.env.PORT}`);
+    } catch (error) {
+        console.log(`server is not running : ${error.message}`);
+    }
 });
