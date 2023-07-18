@@ -1,5 +1,5 @@
 const express = require("express");
-const { YoutubeModel } = require("../module/Youtube.model");
+const { YoutubeModel } = require("../model/Youtube.model");
 const data = express.Router();
 
 data.get("/", async (req, res) => {
@@ -26,7 +26,7 @@ data.get("/search", async (req, res) => {
     });
     res.status(200).send(data);
   } catch (error) {
-    res.status(400).send({error_search:error.message})
+    res.status(400).send({ error_search: error.message });
   }
 });
 
