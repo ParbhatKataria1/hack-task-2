@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-import {  Box, Grid, Input } from "@chakra-ui/react";
+import {  Box, Grid, Heading, Input } from "@chakra-ui/react";
 import CardItem from "./Card";
 import { useState } from "react";
 const url = 'https://youtube-server-vmap.onrender.com';
@@ -17,6 +17,7 @@ function Search() {
   if (error) return "An error has occurred: " + error.message;
   return (
     <Box w={'90%'} margin={'auto'} >
+        <Heading>Search Data</Heading>
       <Box my='20px'>
         <Input onChange={(e)=>{setsearch(e.target.value)}}  placeholder='Seach By title or description'></Input>
       </Box>

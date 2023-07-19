@@ -11,7 +11,7 @@ function App() {
   return (
     <Box w={'90%'} margin={'auto'} className="App">
       <Box my='20px'>
-        <Button onClick={()=>settoggle(<Page/>)}>Paginated Data</Button>
+        <Button  onClick={()=>settoggle(<Page/>)}>Paginated Data</Button>
         <Button onClick={()=>{settoggle(<Search/>)}}>Search Data</Button>
       </Box>
       {toggle}

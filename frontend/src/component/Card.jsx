@@ -17,7 +17,7 @@ const CardItem = ({ data }) => {
   return (
     <GridItem>
       <Card maxW="sm">
-        <CardBody>
+        <CardBody  minH={'400px'}>
           <Image m="auto" src={thumbnails} alt={title} borderRadius="lg" />
           <Stack mt="6" spacing="3">
             <Heading size="md">{title}</Heading>

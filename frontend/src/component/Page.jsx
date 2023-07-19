@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-import {  Box, Button, Flex, Grid } from "@chakra-ui/react";
+import {  Box, Button, Flex, Grid, Heading } from "@chakra-ui/react";
 import CardItem from "./Card";
 import { useState } from "react";
 
@@ -17,7 +17,7 @@ function Page() {
   if (error) return "An error has occurred: " + error.message;
   return (
     <Box w={'90%'} margin={'auto'} >
-      
+       <Heading>Paginated Data</Heading>
       {isLoading && <Box>Loading...</Box>}
 
       <Grid  templateColumns='repeat(3, 1fr)' gap={10}>
