@@ -21,7 +21,7 @@ app.listen(4500, async (req, res) => {
     await connection;
     setInterval(() => {
       fetch_from_youtube();
-    }, 1000 * 60 * 60);
+    }, 1000 * 60 *60);
     console.log(`server is running at port ${process.env.PORT}`);
   } catch (error) {
     console.log(`server is not running : ${error.message}`);

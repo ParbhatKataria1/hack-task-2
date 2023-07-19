@@ -30,7 +30,6 @@ const fetch_from_youtube = async () => {
       };
     });
     console.log("data pushed");
-    console.log(data);
     await YoutubeModel.insertMany(data);
   } catch (error) {
     if (error.code == "403") {
